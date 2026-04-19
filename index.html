@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- PWA / App Standalone Mode -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ChuckGuard">
     <meta name="theme-color" content="#ea580c">
     
-    <title>Chuck Guard AI - Tactical Edition</title>
+    <title>Chuck Guard AI</title>
     
-    <!-- Erweitertes Web Manifest mit Base64 SVG Icon für maximale Kompatibilität -->
-    <link rel="manifest" href='data:application/manifest+json,{"name":"Chuck Guard AI","short_name":"ChuckGuard","start_url":"index.html","display":"standalone","background_color":"#020617","theme_color":"#ea580c","icons":[{"src":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2VhNTgwYyI+PHBhdGggZD0iTTEyIDJMMyA3djZoMWMwIDUuNTIgNC40OCAxMCAxMCAxMHMxMC00LjQ4IDEwLTEwaDFWN2wtOS01em0wIDE4Yy00LjQxIDAtOC0zLjU5LTgtOHYtNC40N2w4LTQuNDQgOCA0LjQ0VjhjMCA0LjQxLTMuNTkgOC04IDh6Ii8+PC9zdmc+","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}]}'>
+    <!-- Apple Touch Icon (Fallback für Android) -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2VhNTgwYyI+PHBhdGggZD0iTTEyIDJMMyA3djZoMWMwIDUuNTIgNC40OCAxMCAxMCAxMHMxMC00LjQ4IDEwLTEwaDFWN2wtOS01em0wIDE4Yy00LjQxIDAtOC0zLjU5LTgtOHYtNC40N2w4LTQuNDQgOCA0LjQ0VjhjMCA0LjQxLTMuNTkgOC04IDh6Ii8+PC9zdmc+">
+
+    <!-- Das ultimative Inline-Manifest für PWA Installation -->
+    <link rel="manifest" href='data:application/manifest+json,{"name":"Chuck Guard AI","short_name":"ChuckGuard","start_url":".","display":"standalone","background_color":"#020617","theme_color":"#ea580c","icons":[{"src":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzAyMDYxNyIvPjxwYXRoIGQ9Ik0yNTYgNTBMOTYgMTUwdjE0MGMwIDExMC40IDg5LjYgMjAwIDIwMCAyMDBzMjAwLTg5LjYgMjAwLTIwMFYxNTBMMjU2IDUweiIgZmlsbD0iI2VhNTgwYyIvPjwvc3ZnPg==","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}]}'>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -26,119 +28,104 @@
             -webkit-tap-highlight-color: transparent; 
             touch-action: manipulation;
             background-color: #020617;
+            overscroll-behavior-y: contain;
         }
-        html, body { overscroll-behavior-y: contain; }
     </style>
 </head>
 <body class="text-white font-sans min-h-screen flex flex-col items-center p-4">
 
-    <!-- Header -->
     <header class="w-full max-w-md py-6 flex justify-between items-center">
         <div class="flex flex-col">
             <h1 class="text-3xl font-black text-orange-500 tracking-tighter uppercase italic leading-none">Chuck Guard</h1>
             <span class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-1">Tactical AI Interface</span>
         </div>
         <div class="bg-orange-600/10 border border-orange-500/20 px-2 py-1 rounded text-[10px] font-mono text-orange-500">
-            v2.3_FINAL_PWA
+            v2.5_STRICT
         </div>
     </header>
 
-    <!-- Tactical Main Frame -->
     <main class="w-full max-w-md bg-slate-900/50 backdrop-blur-md rounded-[2.5rem] p-8 shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/5 flex flex-col gap-8 relative overflow-hidden">
         
-        <!-- Status Bar -->
         <div class="flex items-center justify-between border-b border-white/5 pb-4">
             <div class="flex items-center gap-2">
                 <div id="status-dot" class="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_#22c55e]"></div>
                 <span id="status-text" class="text-[10px] font-black uppercase text-slate-400 tracking-widest">Patrouille Aktiv</span>
             </div>
-            <div class="text-[10px] font-mono text-slate-600">BV9300_PRO_SYS</div>
+            <div class="text-[10px] font-mono text-slate-600">BV9300_PRO</div>
         </div>
 
-        <!-- Visualizer -->
-        <div class="h-48 bg-black/40 rounded-3xl flex items-center justify-center relative border border-orange-500/10 group">
-            <div id="idle-icon" class="flex flex-col items-center gap-4 transition-all duration-500">
-                <div class="text-orange-500/30 group-hover:text-orange-500/50 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                </div>
+        <div class="h-48 bg-black/40 rounded-3xl flex items-center justify-center relative border border-orange-500/10">
+            <div id="idle-icon" class="text-orange-500/30">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
             </div>
             
             <div id="recording-ui" class="hidden flex flex-col items-center">
                 <div class="relative">
                     <div class="absolute inset-0 bg-orange-600 rounded-full recording-ring"></div>
-                    <div class="relative w-20 h-20 bg-orange-600 rounded-full flex items-center justify-center shadow-2xl">
+                    <div class="relative w-20 h-20 bg-orange-600 rounded-full flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                         </svg>
                     </div>
                 </div>
-                <span class="mt-8 text-xs font-black text-orange-500 uppercase italic tracking-widest animate-pulse">Abfangen läuft...</span>
             </div>
         </div>
 
-        <!-- Action Button -->
-        <button id="start-btn" class="w-full bg-gradient-to-b from-orange-500 to-orange-700 hover:from-orange-400 hover:to-orange-600 text-white font-black py-7 rounded-3xl shadow-[0_10px_30px_rgba(234,88,12,0.4)] active:scale-[0.97] transition-all flex flex-col items-center justify-center gap-1 border-b-4 border-orange-900 uppercase italic">
-            <span class="text-xl">Anruf abfangen</span>
-            <span class="text-[10px] not-italic opacity-60 tracking-[0.2em] font-bold">Initiate Chuck Response</span>
+        <button id="start-btn" class="w-full bg-gradient-to-b from-orange-500 to-orange-700 text-white font-black py-7 rounded-3xl shadow-[0_10px_30px_rgba(234,88,12,0.4)] active:scale-[0.95] transition-all border-b-4 border-orange-900 uppercase italic">
+            Anruf abfangen
         </button>
 
-        <!-- Result Area -->
         <div id="result-area" class="hidden flex flex-col gap-4">
             <div class="bg-black/60 rounded-2xl p-4 border border-white/5">
-                <label class="text-[9px] text-orange-500 font-black uppercase tracking-widest mb-2 block">Live-Transkript</label>
-                <p id="transcript-text" class="text-sm text-slate-300 italic min-h-[1.5rem] leading-relaxed">System hört zu...</p>
+                <p id="transcript-text" class="text-sm text-slate-300 italic min-h-[1.5rem]">Höre zu...</p>
             </div>
-            
-            <div id="verdict-box" class="bg-slate-800/40 rounded-2xl p-5 border border-white/5 flex items-center gap-5">
-                <div id="verdict-icon" class="text-4xl bg-black/40 w-16 h-16 rounded-xl flex items-center justify-center border border-white/5">🤠</div>
+            <div id="verdict-box" class="bg-slate-800/40 rounded-2xl p-5 border border-white/5 flex items-center gap-4">
+                <div id="verdict-icon" class="text-3xl">🤠</div>
                 <div class="flex-1">
-                    <h3 id="verdict-title" class="font-black italic text-base uppercase text-white leading-none mb-1">Analyse</h3>
-                    <p id="verdict-desc" class="text-[10px] text-slate-500 font-bold uppercase tracking-tight">Warte auf Ziel...</p>
+                    <h3 id="verdict-title" class="font-black italic text-sm uppercase">Analyse läuft</h3>
+                    <p id="verdict-desc" class="text-[10px] text-slate-500 uppercase mt-1">Warte auf verlässliche Daten...</p>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        // Optimierter Service Worker für PWA-Installation
+        // Registrierung eines "echten" Service Workers als Blob
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                const swCode = `
-                    self.addEventListener('install', (e) => { self.skipWaiting(); });
-                    self.addEventListener('activate', (e) => { return self.clients.claim(); });
-                    self.addEventListener('fetch', (e) => { e.respondWith(fetch(e.request)); });
-                `;
-                const blob = new Blob([swCode], {type: 'text/javascript'});
-                navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(err => console.log("SW Error", err));
-            });
+            const swCode = `
+                self.addEventListener('install', e => self.skipWaiting());
+                self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+                self.addEventListener('fetch', e => e.respondWith(fetch(e.request)));
+            `;
+            const blob = new Blob([swCode], {type: 'text/javascript'});
+            navigator.serviceWorker.register(URL.createObjectURL(blob));
         }
 
         const apiKey = ""; 
         const startBtn = document.getElementById('start-btn');
-        const statusText = document.getElementById('status-text');
-        const statusDot = document.getElementById('status-dot');
-        const idleIcon = document.getElementById('idle-icon');
         const recordingUI = document.getElementById('recording-ui');
+        const idleIcon = document.getElementById('idle-icon');
         const resultArea = document.getElementById('result-area');
         const transcriptText = document.getElementById('transcript-text');
         const verdictBox = document.getElementById('verdict-box');
         const verdictTitle = document.getElementById('verdict-title');
         const verdictDesc = document.getElementById('verdict-desc');
         const verdictIcon = document.getElementById('verdict-icon');
+        const statusDot = document.getElementById('status-dot');
 
         let recognition;
         let isScreening = false;
+        let analysisInProgress = false;
 
         async function speak(text) {
-            const prompt = `Du bist Chuck Norris. Sag das cool auf Deutsch: ${text}`;
             try {
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }],
+                        contents: [{ parts: [{ text: `Chuck Norris sagt extrem autoritär: ${text}` }] }],
                         generationConfig: {
                             responseModalities: ["AUDIO"],
                             speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Puck" } } } 
@@ -147,8 +134,7 @@
                 });
                 const result = await response.json();
                 const audioData = result.candidates[0].content.parts[0].inlineData.data;
-                const audioBlob = b64toBlob(audioData, 'audio/wav');
-                const audio = new Audio(URL.createObjectURL(audioBlob));
+                const audio = new Audio("data:audio/wav;base64," + audioData);
                 return new Promise(r => { audio.onended = r; audio.play(); });
             } catch (e) {
                 return new Promise(r => {
@@ -157,28 +143,47 @@
             }
         }
 
-        function b64toBlob(b64, type) {
-            const bin = atob(b64);
-            const buf = new Uint8Array(bin.length);
-            for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
-            return new Blob([buf], {type});
-        }
-
         async function analyzeCall(text) {
-            const systemPrompt = `Du bist Chuck Norris. Analysiere den Anrufer (SCAM, PAKETBOTE, LEGITIM). JSON: {"verdict": "...", "chuck_comment": "..."}`;
+            // WICHTIG: Der strikte System-Prompt für maximale Zuverlässigkeit (Few-Shot)
+            const systemPrompt = `Du bist Chuck Norris, der ultimative Sicherheitsexperte. Du analysierst Anrufe absolut präzise und fällst keine voreiligen Schlüsse.
+            
+            KATEGORIEN & STRIKTE REGELN:
+            1. SCAM (Betrug/Spam/Werbung):
+               - Merkmale: Unerwartete Gewinne, "Microsoft Support", Enkeltrick, Umfragen, Stromanbieterwechsel, Drückerkolonnen, Kryptowährung, angebliche Polizei (nach Geld fragend).
+               - Chucks Reaktion: Gnadenlos.
+            2. PAKETBOTE (Lieferung):
+               - Merkmale: Nennt meist Paketdienste (DHL, Hermes, DPD, Amazon, UPS, GLS), redet von "Tür", "Klingel", "Nachbar", "Adresse nicht gefunden", "bin unten", "Paket".
+               - Chucks Reaktion: Respektvoll (harte Arbeit).
+            3. LEGITIM (Normaler Anruf):
+               - Merkmale: Normale Gesprächseröffnung, Arztpraxis, Bekannte, Freunde, keine Geldforderungen, kein Druck.
+               - Chucks Reaktion: Friedlich durchstellen.
+            
+            BEISPIELE FÜR DIE ANALYSE:
+            - "Ja hallo, wir rufen an wegen Ihrer letzten Stromrechnung..." -> SCAM
+            - "Hallo, ich stehe hier unten an der Haustür, aber ihr Name steht nicht dran." -> PAKETBOTE
+            - "Guten Tag, spreche ich mit dem Anschlussinhaber? Sie haben gewonnen..." -> SCAM
+            - "Hallo, hier ist die Praxis Dr. Müller, es geht um Ihren Termin." -> LEGITIM
+            
+            Zwingendes ANTWORT-FORMAT (striktes JSON):
+            {
+              "verdict": "SCAM" | "PAKETBOTE" | "LEGITIM" | "UNBEKANNT",
+              "reason": "Präzise und logische Begründung, warum diese Kategorie gewählt wurde.",
+              "chuck_comment": "Ein passender, knallharter Chuck Norris Spruch zu dieser spezifischen Situation."
+            }`;
+
             try {
                 const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text }] }],
+                        contents: [{ parts: [{ text: text }] }],
                         systemInstruction: { parts: [{ text: systemPrompt }] },
                         generationConfig: { responseMimeType: "application/json" }
                     })
                 });
                 const d = await r.json();
                 return JSON.parse(d.candidates[0].content.parts[0].text);
-            } catch (e) { return { verdict: '?', chuck_comment: 'Analysiere...' }; }
+            } catch (e) { return { verdict: 'UNBEKANNT', reason: 'Systemfehler', chuck_comment: 'Verbindung gestört. Chuck Norris wartet.' }; }
         }
 
         if ('webkitSpeechRecognition' in window) {
@@ -186,40 +191,96 @@
             recognition.continuous = true;
             recognition.interimResults = true;
             recognition.lang = 'de-DE';
+            
             recognition.onresult = (e) => {
                 let trans = '';
-                for (let i = e.resultIndex; i < e.results.length; ++i) if (e.results[i].isFinal) trans += e.results[i][0].transcript;
-                if(trans.length > 8) {
+                for (let i = e.resultIndex; i < e.results.length; ++i) {
+                    if (e.results[i].isFinal) trans += e.results[i][0].transcript;
+                }
+                
+                // Blockiere Analyse bei zu kurzem Text (mindestens 15 Zeichen für Kontext)
+                if(trans.length > 15 && !analysisInProgress) {
                     transcriptText.innerText = `"${trans}"`;
                     processAnalysis(trans);
+                } else if (trans.length > 0 && !analysisInProgress) {
+                    transcriptText.innerText = `"${trans}" (Sammle mehr Kontext...)`;
                 }
             };
         }
 
         async function processAnalysis(text) {
+            analysisInProgress = true;
             const res = await analyzeCall(text);
+            
+            // UI Update basierend auf dem Ergebnis
             if (res.verdict === 'SCAM') {
-                verdictBox.className = "bg-red-950/40 rounded-2xl p-5 border-2 border-red-600 flex items-center gap-5";
+                verdictBox.className = "bg-red-950/40 rounded-2xl p-5 border-2 border-red-600 flex items-center gap-4";
                 verdictTitle.innerText = "SCAM TERMINIERT";
+                verdictIcon.innerText = "👊";
+                verdictDesc.innerText = res.chuck_comment;
+                statusDot.className = "w-2 h-2 rounded-full bg-red-600 shadow-[0_0_8px_red]";
+                
                 await speak("Ende der Leitung. " + res.chuck_comment);
                 stopScreening();
+            } else if (res.verdict === 'PAKETBOTE') {
+                verdictBox.className = "bg-orange-950/40 rounded-2xl p-5 border-2 border-orange-500 flex items-center gap-4";
+                verdictTitle.innerText = "BOTE VERIFIZIERT";
+                verdictIcon.innerText = "📦";
+                verdictDesc.innerText = res.reason;
+                statusDot.className = "w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_8px_orange]";
+                
+                await speak("Paketbote erkannt. Chuck Norris erlaubt diesen Anruf.");
+                stopScreening();
+            } else if (res.verdict === 'LEGITIM') {
+                verdictBox.className = "bg-blue-950/40 rounded-2xl p-5 border-2 border-blue-500 flex items-center gap-4";
+                verdictTitle.innerText = "ANRUF SICHER";
+                verdictIcon.innerText = "✅";
+                verdictDesc.innerText = res.reason;
+                statusDot.className = "w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_blue]";
+                
+                await speak("Bekanntes Ziel. Du kannst sprechen.");
+                stopScreening();
+            } else {
+                // UNBEKANNT -> Weiter zuhören lassen
+                analysisInProgress = false; 
             }
-            verdictDesc.innerText = res.chuck_comment;
         }
 
         function stopScreening() {
-            isScreening = false; startBtn.disabled = false;
-            idleIcon.classList.remove('hidden'); recordingUI.classList.add('hidden');
+            isScreening = false; 
+            analysisInProgress = false;
+            startBtn.disabled = false;
+            idleIcon.classList.remove('hidden'); 
+            recordingUI.classList.add('hidden');
             if(recognition) recognition.stop();
         }
 
         startBtn.addEventListener('click', async () => {
             if(isScreening) return;
-            isScreening = true; resultArea.classList.remove('hidden');
-            startBtn.disabled = true; idleIcon.classList.add('hidden'); recordingUI.classList.remove('hidden');
-            await speak("Hier ist Chuck Norris. Was willst du?");
+            isScreening = true; 
+            analysisInProgress = false;
+            
+            // Reset UI
+            resultArea.classList.remove('hidden');
+            verdictBox.className = "bg-slate-800/40 rounded-2xl p-5 border border-white/5 flex items-center gap-4";
+            verdictTitle.innerText = "Analyse läuft";
+            verdictIcon.innerText = "🤠";
+            verdictDesc.innerText = "Warte auf verlässliche Daten...";
+            transcriptText.innerText = "Höre zu...";
+            statusDot.className = "w-2 h-2 rounded-full bg-orange-500 animate-pulse shadow-[0_0_8px_orange]";
+            
+            startBtn.disabled = true; 
+            idleIcon.classList.add('hidden'); 
+            recordingUI.classList.remove('hidden');
+            
+            await speak("Hier ist Chuck Norris. Erkläre dein Anliegen sofort.");
             if(recognition) recognition.start();
-            setTimeout(stopScreening, 40000);
+            
+            // Sicherheits-Timeout nach 40 Sekunden
+            setTimeout(() => {
+                if(isScreening) stopScreening();
+                statusDot.className = "w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e]";
+            }, 40000);
         });
     </script>
 </body>
