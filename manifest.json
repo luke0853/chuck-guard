@@ -1,0 +1,16 @@
+{
+  "name": "Chuck Guard AI",
+  "short_name": "ChuckGuard",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#ea580c",
+  "icons": [
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Orange_shield.svg/512px-Orange_shield.svg.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
