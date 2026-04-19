@@ -12,11 +12,11 @@
     
     <title>Chuck Guard AI</title>
     
-    <!-- Apple Touch Icon (Fallback für Android) -->
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2VhNTgwYyI+PHBhdGggZD0iTTEyIDJMMyA3djZoMWMwIDUuNTIgNC40OCAxMCAxMCAxMHMxMC00LjQ4IDEwLTEwaDFWN2wtOS01em0wIDE4Yy00LjQxIDAtOC0zLjU5LTgtOHYtNC40N2w4LTQuNDQgOCA0LjQ0VjhjMCA0LjQxLTMuNTkgOC04IDh6Ii8+PC9zdmc+">
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzAyMDYxNyIvPjxwYXRoIGQ9Ik0yNTYgNTBMOTYgMTUwdjE0MGMwIDExMC40IDg5LjYgMjAwIDIwMCAyMDBzMjAwLTg5LjYgMjAwLTIwMFYxNTBMMjU2IDUweiIgZmlsbD0iI2VhNTgwYyIvPjwvc3ZnPg==">
 
-    <!-- Das ultimative Inline-Manifest für PWA Installation -->
-    <link rel="manifest" href='data:application/manifest+json,{"name":"Chuck Guard AI","short_name":"ChuckGuard","start_url":".","display":"standalone","background_color":"#020617","theme_color":"#ea580c","icons":[{"src":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzAyMDYxNyIvPjxwYXRoIGQ9Ik0yNTYgNTBMOTYgMTUwdjE0MGMwIDExMC40IDg5LjYgMjAwIDIwMCAyMDBzMjAwLTg5LjYgMjAwLTIwMFYxNTBMMjU2IDUweiIgZmlsbD0iI2VhNTgwYyIvPjwvc3ZnPg==","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}]}'>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href='data:application/manifest+json,{"name":"Chuck Guard AI","short_name":"ChuckGuard","start_url":"index.html","display":"standalone","background_color":"#020617","theme_color":"#ea580c","icons":[{"src":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzAyMDYxNyIvPjxwYXRoIGQ9Ik0yNTYgNTBMOTYgMTUwdjE0MGMwIDExMC40IDg5LjYgMjAwIDIwMCAyMDBzMjAwLTg5LjYgMjAwLTIwMFYxNTBMMjU2IDUweiIgZmlsbD0iI2VhNTgwYyIvPjwvc3ZnPg==","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}]}'>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -40,7 +40,7 @@
             <span class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-1">Tactical AI Interface</span>
         </div>
         <div class="bg-orange-600/10 border border-orange-500/20 px-2 py-1 rounded text-[10px] font-mono text-orange-500">
-            v2.5_STRICT
+            v2.6_DEPLOY
         </div>
     </header>
 
@@ -85,23 +85,27 @@
                 <div id="verdict-icon" class="text-3xl">🤠</div>
                 <div class="flex-1">
                     <h3 id="verdict-title" class="font-black italic text-sm uppercase">Analyse läuft</h3>
-                    <p id="verdict-desc" class="text-[10px] text-slate-500 uppercase mt-1">Warte auf verlässliche Daten...</p>
+                    <p id="verdict-desc" class="text-[10px] text-slate-500 uppercase mt-1">Warte auf Daten...</p>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        // Registrierung eines "echten" Service Workers als Blob
-        if ('serviceWorker' in navigator) {
-            const swCode = `
-                self.addEventListener('install', e => self.skipWaiting());
-                self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
-                self.addEventListener('fetch', e => e.respondWith(fetch(e.request)));
-            `;
-            const blob = new Blob([swCode], {type: 'text/javascript'});
-            navigator.serviceWorker.register(URL.createObjectURL(blob));
+        // Ultimativer Service Worker Hack für GitHub Pages
+        async function registerSW() {
+            if ('serviceWorker' in navigator) {
+                const swScript = "self.addEventListener('fetch', e => e.respondWith(fetch(e.request)));";
+                const blob = new Blob([swScript], {type: 'text/javascript'});
+                const swUrl = URL.createObjectURL(blob);
+                try {
+                    await navigator.serviceWorker.register(swUrl);
+                } catch (e) {
+                    console.log("SW failed");
+                }
+            }
         }
+        registerSW();
 
         const apiKey = ""; 
         const startBtn = document.getElementById('start-btn');
@@ -144,46 +148,20 @@
         }
 
         async function analyzeCall(text) {
-            // WICHTIG: Der strikte System-Prompt für maximale Zuverlässigkeit (Few-Shot)
-            const systemPrompt = `Du bist Chuck Norris, der ultimative Sicherheitsexperte. Du analysierst Anrufe absolut präzise und fällst keine voreiligen Schlüsse.
-            
-            KATEGORIEN & STRIKTE REGELN:
-            1. SCAM (Betrug/Spam/Werbung):
-               - Merkmale: Unerwartete Gewinne, "Microsoft Support", Enkeltrick, Umfragen, Stromanbieterwechsel, Drückerkolonnen, Kryptowährung, angebliche Polizei (nach Geld fragend).
-               - Chucks Reaktion: Gnadenlos.
-            2. PAKETBOTE (Lieferung):
-               - Merkmale: Nennt meist Paketdienste (DHL, Hermes, DPD, Amazon, UPS, GLS), redet von "Tür", "Klingel", "Nachbar", "Adresse nicht gefunden", "bin unten", "Paket".
-               - Chucks Reaktion: Respektvoll (harte Arbeit).
-            3. LEGITIM (Normaler Anruf):
-               - Merkmale: Normale Gesprächseröffnung, Arztpraxis, Bekannte, Freunde, keine Geldforderungen, kein Druck.
-               - Chucks Reaktion: Friedlich durchstellen.
-            
-            BEISPIELE FÜR DIE ANALYSE:
-            - "Ja hallo, wir rufen an wegen Ihrer letzten Stromrechnung..." -> SCAM
-            - "Hallo, ich stehe hier unten an der Haustür, aber ihr Name steht nicht dran." -> PAKETBOTE
-            - "Guten Tag, spreche ich mit dem Anschlussinhaber? Sie haben gewonnen..." -> SCAM
-            - "Hallo, hier ist die Praxis Dr. Müller, es geht um Ihren Termin." -> LEGITIM
-            
-            Zwingendes ANTWORT-FORMAT (striktes JSON):
-            {
-              "verdict": "SCAM" | "PAKETBOTE" | "LEGITIM" | "UNBEKANNT",
-              "reason": "Präzise und logische Begründung, warum diese Kategorie gewählt wurde.",
-              "chuck_comment": "Ein passender, knallharter Chuck Norris Spruch zu dieser spezifischen Situation."
-            }`;
-
+            const systemPrompt = `Du bist Chuck Norris, Sicherheitsexperte. Analysiere präzise: SCAM, PAKETBOTE, LEGITIM. JSON Format: {"verdict": "...", "reason": "...", "chuck_comment": "..."}`;
             try {
                 const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: text }] }],
+                        contents: [{ parts: [{ text }] }],
                         systemInstruction: { parts: [{ text: systemPrompt }] },
                         generationConfig: { responseMimeType: "application/json" }
                     })
                 });
                 const d = await r.json();
                 return JSON.parse(d.candidates[0].content.parts[0].text);
-            } catch (e) { return { verdict: 'UNBEKANNT', reason: 'Systemfehler', chuck_comment: 'Verbindung gestört. Chuck Norris wartet.' }; }
+            } catch (e) { return { verdict: 'UNBEKANNT', reason: 'Fehler', chuck_comment: 'Warte...' }; }
         }
 
         if ('webkitSpeechRecognition' in window) {
@@ -197,13 +175,9 @@
                 for (let i = e.resultIndex; i < e.results.length; ++i) {
                     if (e.results[i].isFinal) trans += e.results[i][0].transcript;
                 }
-                
-                // Blockiere Analyse bei zu kurzem Text (mindestens 15 Zeichen für Kontext)
                 if(trans.length > 15 && !analysisInProgress) {
                     transcriptText.innerText = `"${trans}"`;
                     processAnalysis(trans);
-                } else if (trans.length > 0 && !analysisInProgress) {
-                    transcriptText.innerText = `"${trans}" (Sammle mehr Kontext...)`;
                 }
             };
         }
@@ -212,37 +186,23 @@
             analysisInProgress = true;
             const res = await analyzeCall(text);
             
-            // UI Update basierend auf dem Ergebnis
             if (res.verdict === 'SCAM') {
                 verdictBox.className = "bg-red-950/40 rounded-2xl p-5 border-2 border-red-600 flex items-center gap-4";
                 verdictTitle.innerText = "SCAM TERMINIERT";
                 verdictIcon.innerText = "👊";
                 verdictDesc.innerText = res.chuck_comment;
                 statusDot.className = "w-2 h-2 rounded-full bg-red-600 shadow-[0_0_8px_red]";
-                
                 await speak("Ende der Leitung. " + res.chuck_comment);
                 stopScreening();
-            } else if (res.verdict === 'PAKETBOTE') {
-                verdictBox.className = "bg-orange-950/40 rounded-2xl p-5 border-2 border-orange-500 flex items-center gap-4";
-                verdictTitle.innerText = "BOTE VERIFIZIERT";
-                verdictIcon.innerText = "📦";
-                verdictDesc.innerText = res.reason;
-                statusDot.className = "w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_8px_orange]";
-                
-                await speak("Paketbote erkannt. Chuck Norris erlaubt diesen Anruf.");
-                stopScreening();
-            } else if (res.verdict === 'LEGITIM') {
+            } else if (res.verdict === 'PAKETBOTE' || res.verdict === 'LEGITIM') {
                 verdictBox.className = "bg-blue-950/40 rounded-2xl p-5 border-2 border-blue-500 flex items-center gap-4";
-                verdictTitle.innerText = "ANRUF SICHER";
+                verdictTitle.innerText = "SICHER";
                 verdictIcon.innerText = "✅";
                 verdictDesc.innerText = res.reason;
-                statusDot.className = "w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_blue]";
-                
-                await speak("Bekanntes Ziel. Du kannst sprechen.");
+                await speak("Anruf verifiziert. Du kannst sprechen.");
                 stopScreening();
             } else {
-                // UNBEKANNT -> Weiter zuhören lassen
-                analysisInProgress = false; 
+                analysisInProgress = false;
             }
         }
 
@@ -259,28 +219,13 @@
             if(isScreening) return;
             isScreening = true; 
             analysisInProgress = false;
-            
-            // Reset UI
             resultArea.classList.remove('hidden');
-            verdictBox.className = "bg-slate-800/40 rounded-2xl p-5 border border-white/5 flex items-center gap-4";
-            verdictTitle.innerText = "Analyse läuft";
-            verdictIcon.innerText = "🤠";
-            verdictDesc.innerText = "Warte auf verlässliche Daten...";
-            transcriptText.innerText = "Höre zu...";
-            statusDot.className = "w-2 h-2 rounded-full bg-orange-500 animate-pulse shadow-[0_0_8px_orange]";
-            
             startBtn.disabled = true; 
             idleIcon.classList.add('hidden'); 
             recordingUI.classList.remove('hidden');
-            
-            await speak("Hier ist Chuck Norris. Erkläre dein Anliegen sofort.");
+            await speak("Hier ist Chuck Norris. Was willst du?");
             if(recognition) recognition.start();
-            
-            // Sicherheits-Timeout nach 40 Sekunden
-            setTimeout(() => {
-                if(isScreening) stopScreening();
-                statusDot.className = "w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e]";
-            }, 40000);
+            setTimeout(stopScreening, 40000);
         });
     </script>
 </body>
