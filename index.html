@@ -12,8 +12,8 @@
     
     <title>Chuck Guard AI - Tactical Edition</title>
     
-    <!-- Web Manifest Inline (Wichtig für Android Installation) -->
-    <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Chuck%20Guard%20AI%22,%22short_name%22:%22ChuckGuard%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22#020617%22,%22theme_color%22:%22#ea580c%22}">
+    <!-- Erweitertes Web Manifest (Wichtig für den "Installieren" Button) -->
+    <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Chuck%20Guard%20AI%22,%22short_name%22:%22ChuckGuard%22,%22start_url%22:%22index.html%22,%22display%22:%22standalone%22,%22background_color%22:%22#020617%22,%22theme_color%22:%22#ea580c%22,%22icons%22:[{%22src%22:%22https://cdn-icons-png.flaticon.com/512/771/771241.png%22,%22sizes%22:%22512x512%22,%22type%22:%22image/png%22,%22purpose%22:%22any%20maskable%22}]}">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -26,6 +26,8 @@
             touch-action: manipulation;
             background-color: #020617;
         }
+        /* Verhindert das "Ziehen" der Seite zum Aktualisieren in der App */
+        html, body { overscroll-behavior-y: contain; }
     </style>
 </head>
 <body class="text-white font-sans min-h-screen flex flex-col items-center p-4">
@@ -37,7 +39,7 @@
             <span class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-1">Tactical AI Interface</span>
         </div>
         <div class="bg-orange-600/10 border border-orange-500/20 px-2 py-1 rounded text-[10px] font-mono text-orange-500">
-            v2.1_STABLE
+            v2.2_PWA
         </div>
     </header>
 
@@ -83,13 +85,13 @@
         </button>
 
         <!-- Dynamic Content -->
-        <div id="result-area" class="hidden flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div id="result-area" class="hidden flex flex-col gap-4">
             <div class="bg-black/60 rounded-2xl p-4 border border-white/5">
                 <label class="text-[9px] text-orange-500 font-black uppercase tracking-widest mb-2 block">Live-Transkript</label>
                 <p id="transcript-text" class="text-sm text-slate-300 italic min-h-[1.5rem] leading-relaxed">System hört zu...</p>
             </div>
             
-            <div id="verdict-box" class="bg-slate-800/40 rounded-2xl p-5 border border-white/5 flex items-center gap-5 transition-all duration-1000">
+            <div id="verdict-box" class="bg-slate-800/40 rounded-2xl p-5 border border-white/5 flex items-center gap-5">
                 <div id="verdict-icon" class="text-4xl bg-black/40 w-16 h-16 rounded-xl flex items-center justify-center border border-white/5">🤠</div>
                 <div class="flex-1">
                     <h3 id="verdict-title" class="font-black italic text-base uppercase text-white leading-none mb-1">Analyse</h3>
@@ -99,17 +101,18 @@
         </div>
     </main>
 
-    <footer class="mt-auto py-8 opacity-20 hover:opacity-100 transition-opacity">
+    <footer class="mt-auto py-8">
         <p class="text-center text-[9px] font-bold uppercase tracking-[0.4em] text-slate-500">
             Tactical Defense Protocol // Blackview Optimized
         </p>
     </footer>
 
     <script>
-        // PWA Service Worker Registration
+        // Dummy Service Worker für PWA-Erkennung
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                const blob = new Blob(["self.addEventListener('fetch', function(event) {});"], {type: 'text/javascript'});
+                const swCode = "self.addEventListener('fetch', (e) => {});";
+                const blob = new Blob([swCode], {type: 'text/javascript'});
                 navigator.serviceWorker.register(URL.createObjectURL(blob));
             });
         }
