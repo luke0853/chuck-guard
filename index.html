@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
+    <!-- Klassische Android & Chrome App Tags (Oft stabiler als Manifest) -->
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="ChuckGuard">
+    <link rel="icon" sizes="192x192" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzAyMDYxNyIvPjxwYXRoIGQ9Ik0yNTYgNTBMOTYgMTUwdjE0MGMwIDExMC40IDg5LjYgMjAwIDIwMCAyMDBzMjAwLTg5LjYgMjAwLTIwMFYxNTBMMjU2IDUweiIgZmlsbD0iI2VhNTgwYyIvPjwvc3ZnPg==">
+    
+    <!-- Apple Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ChuckGuard">
-    <meta name="theme-color" content="#ea580c">
-    
-    <title>Chuck Guard AI</title>
-    
-    <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzAyMDYxNyIvPjxwYXRoIGQ9Ik0yNTYgNTBMOTYgMTUwdjE0MGMwIDExMC40IDg5LjYgMjAwIDIwMCAyMDBzMjAwLTg5LjYgMjAwLTIwMFYxNTBMMjU2IDUweiIgZmlsbD0iI2VhNTgwYyIvPjwvc3ZnPg==">
 
-    <!-- PWA Manifest -->
-    <link rel="manifest" href='data:application/manifest+json,{"name":"Chuck Guard AI","short_name":"ChuckGuard","start_url":"index.html","display":"standalone","background_color":"#020617","theme_color":"#ea580c","icons":[{"src":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzAyMDYxNyIvPjxwYXRoIGQ9Ik0yNTYgNTBMOTYgMTUwdjE0MGMwIDExMC40IDg5LjYgMjAwIDIwMCAyMDBzMjAwLTg5LjYgMjAwLTIwMFYxNTBMMjU2IDUweiIgZmlsbD0iI2VhNTgwYyIvPjwvc3ZnPg==","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}]}'>
+    <!-- Theme & UI -->
+    <meta name="theme-color" content="#ea580c">
+    <title>Chuck Guard AI - Tactical</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -25,8 +26,6 @@
         body { 
             -webkit-user-select: none; 
             user-select: none; 
-            -webkit-tap-highlight-color: transparent; 
-            touch-action: manipulation;
             background-color: #020617;
             overscroll-behavior-y: contain;
         }
@@ -40,18 +39,18 @@
             <span class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-1">Tactical AI Interface</span>
         </div>
         <div class="bg-orange-600/10 border border-orange-500/20 px-2 py-1 rounded text-[10px] font-mono text-orange-500">
-            v2.6_DEPLOY
+            v2.7_FINAL
         </div>
     </header>
 
-    <main class="w-full max-w-md bg-slate-900/50 backdrop-blur-md rounded-[2.5rem] p-8 shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/5 flex flex-col gap-8 relative overflow-hidden">
+    <main class="w-full max-w-md bg-slate-900/50 backdrop-blur-md rounded-[2.5rem] p-8 shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/5 flex flex-col gap-8 relative">
         
         <div class="flex items-center justify-between border-b border-white/5 pb-4">
             <div class="flex items-center gap-2">
-                <div id="status-dot" class="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_#22c55e]"></div>
+                <div id="status-dot" class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                 <span id="status-text" class="text-[10px] font-black uppercase text-slate-400 tracking-widest">Patrouille Aktiv</span>
             </div>
-            <div class="text-[10px] font-mono text-slate-600">BV9300_PRO</div>
+            <div class="text-[10px] font-mono text-slate-600 italic">SECURED_BY_CHUCK</div>
         </div>
 
         <div class="h-48 bg-black/40 rounded-3xl flex items-center justify-center relative border border-orange-500/10">
@@ -79,34 +78,19 @@
 
         <div id="result-area" class="hidden flex flex-col gap-4">
             <div class="bg-black/60 rounded-2xl p-4 border border-white/5">
-                <p id="transcript-text" class="text-sm text-slate-300 italic min-h-[1.5rem]">Höre zu...</p>
+                <p id="transcript-text" class="text-sm text-slate-300 italic min-h-[1.5rem]">Initialisiere Audio-Feed...</p>
             </div>
             <div id="verdict-box" class="bg-slate-800/40 rounded-2xl p-5 border border-white/5 flex items-center gap-4">
                 <div id="verdict-icon" class="text-3xl">🤠</div>
                 <div class="flex-1">
-                    <h3 id="verdict-title" class="font-black italic text-sm uppercase">Analyse läuft</h3>
-                    <p id="verdict-desc" class="text-[10px] text-slate-500 uppercase mt-1">Warte auf Daten...</p>
+                    <h3 id="verdict-title" class="font-black italic text-sm uppercase">Chuck Guard Analyse</h3>
+                    <p id="verdict-desc" class="text-[10px] text-slate-500 uppercase mt-1">Sammle Beweise...</p>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        // Ultimativer Service Worker Hack für GitHub Pages
-        async function registerSW() {
-            if ('serviceWorker' in navigator) {
-                const swScript = "self.addEventListener('fetch', e => e.respondWith(fetch(e.request)));";
-                const blob = new Blob([swScript], {type: 'text/javascript'});
-                const swUrl = URL.createObjectURL(blob);
-                try {
-                    await navigator.serviceWorker.register(swUrl);
-                } catch (e) {
-                    console.log("SW failed");
-                }
-            }
-        }
-        registerSW();
-
         const apiKey = ""; 
         const startBtn = document.getElementById('start-btn');
         const recordingUI = document.getElementById('recording-ui');
@@ -117,7 +101,6 @@
         const verdictTitle = document.getElementById('verdict-title');
         const verdictDesc = document.getElementById('verdict-desc');
         const verdictIcon = document.getElementById('verdict-icon');
-        const statusDot = document.getElementById('status-dot');
 
         let recognition;
         let isScreening = false;
@@ -129,7 +112,7 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: `Chuck Norris sagt extrem autoritär: ${text}` }] }],
+                        contents: [{ parts: [{ text: `Du bist Chuck Norris. Sag extrem trocken und autoritär: ${text}` }] }],
                         generationConfig: {
                             responseModalities: ["AUDIO"],
                             speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Puck" } } } 
@@ -148,7 +131,14 @@
         }
 
         async function analyzeCall(text) {
-            const systemPrompt = `Du bist Chuck Norris, Sicherheitsexperte. Analysiere präzise: SCAM, PAKETBOTE, LEGITIM. JSON Format: {"verdict": "...", "reason": "...", "chuck_comment": "..."}`;
+            const systemPrompt = `Du bist Chuck Norris. Du hast NULL TOLERANZ für Betrüger. Analysiere den Text extrem streng. 
+            Kategorien: 
+            - SCAM (Geld, Gewinn, Enkeltrick, Support, Umfragen, Druck)
+            - PAKETBOTE (Lieferung, DHL, Tür, Nachbar)
+            - LEGITIM (Freunde, bekannte Firmen ohne Forderungen)
+            
+            JSON FORMAT ZWINGEND: {"verdict": "SCAM"|"PAKETBOTE"|"LEGITIM", "reason": "Kurze Begründung", "chuck_comment": "Harter Spruch"}`;
+            
             try {
                 const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
                     method: 'POST',
@@ -161,7 +151,7 @@
                 });
                 const d = await r.json();
                 return JSON.parse(d.candidates[0].content.parts[0].text);
-            } catch (e) { return { verdict: 'UNBEKANNT', reason: 'Fehler', chuck_comment: 'Warte...' }; }
+            } catch (e) { return { verdict: 'UNBEKANNT', reason: 'Analysefehler', chuck_comment: 'Chuck Norris braucht keine Erlaubnis.' }; }
         }
 
         if ('webkitSpeechRecognition' in window) {
@@ -175,7 +165,7 @@
                 for (let i = e.resultIndex; i < e.results.length; ++i) {
                     if (e.results[i].isFinal) trans += e.results[i][0].transcript;
                 }
-                if(trans.length > 15 && !analysisInProgress) {
+                if(trans.length > 10 && !analysisInProgress) {
                     transcriptText.innerText = `"${trans}"`;
                     processAnalysis(trans);
                 }
@@ -188,18 +178,17 @@
             
             if (res.verdict === 'SCAM') {
                 verdictBox.className = "bg-red-950/40 rounded-2xl p-5 border-2 border-red-600 flex items-center gap-4";
-                verdictTitle.innerText = "SCAM TERMINIERT";
-                verdictIcon.innerText = "👊";
+                verdictTitle.innerText = "ELIMINIERT";
+                verdictIcon.innerText = "💀";
                 verdictDesc.innerText = res.chuck_comment;
-                statusDot.className = "w-2 h-2 rounded-full bg-red-600 shadow-[0_0_8px_red]";
-                await speak("Ende der Leitung. " + res.chuck_comment);
+                await speak("Gespräch beendet. " + res.chuck_comment);
                 stopScreening();
             } else if (res.verdict === 'PAKETBOTE' || res.verdict === 'LEGITIM') {
                 verdictBox.className = "bg-blue-950/40 rounded-2xl p-5 border-2 border-blue-500 flex items-center gap-4";
-                verdictTitle.innerText = "SICHER";
-                verdictIcon.innerText = "✅";
+                verdictTitle.innerText = "FREIGEGEBEN";
+                verdictIcon.innerText = "✔️";
                 verdictDesc.innerText = res.reason;
-                await speak("Anruf verifiziert. Du kannst sprechen.");
+                await speak("Du kannst jetzt sprechen.");
                 stopScreening();
             } else {
                 analysisInProgress = false;
@@ -207,25 +196,20 @@
         }
 
         function stopScreening() {
-            isScreening = false; 
-            analysisInProgress = false;
+            isScreening = false; analysisInProgress = false;
             startBtn.disabled = false;
-            idleIcon.classList.remove('hidden'); 
-            recordingUI.classList.add('hidden');
+            idleIcon.classList.remove('hidden'); recordingUI.classList.add('hidden');
             if(recognition) recognition.stop();
         }
 
         startBtn.addEventListener('click', async () => {
             if(isScreening) return;
-            isScreening = true; 
-            analysisInProgress = false;
+            isScreening = true;
             resultArea.classList.remove('hidden');
-            startBtn.disabled = true; 
-            idleIcon.classList.add('hidden'); 
-            recordingUI.classList.remove('hidden');
-            await speak("Hier ist Chuck Norris. Was willst du?");
+            startBtn.disabled = true; idleIcon.classList.add('hidden'); recordingUI.classList.remove('hidden');
+            await speak("Chuck Norris hier. Was willst du?");
             if(recognition) recognition.start();
-            setTimeout(stopScreening, 40000);
+            setTimeout(stopScreening, 35000);
         });
     </script>
 </body>
