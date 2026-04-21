@@ -11,7 +11,7 @@
     
     <title>Chuck Guard AI</title>
     
-    <!-- Validiertes Icon (Schild-Logo) -->
+    <!-- Validiertes Icon (Schild-Logo) - Direkt eingebettet für maximale Kompatibilität -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzAyMDYxNyIvPjxwYXRoIGQ9Ik0yNTYgNTBMOTYgMTUwdjE0MGMwIDExMC40IDg5LjYgMjAwIDIwMCAyMDBzMjAwLTg5LjYgMjAwLTIwMFYxNTBMMjU2IDUweiIgZmlsbD0iI2VhNTgwYyIvPjwvc3ZnPg==">
     <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzAyMDYxNyIvPjxwYXRoIGQ9Ik0yNTYgNTBMOTYgMTUwdjE0MGMwIDExMC40IDg5LjYgMjAwIDIwMCAyMDBzMjAwLTg5LjYgMjAwLTIwMFYxNTBMMjU2IDUweiIgZmlsbD0iI2VhNTgwYyIvPjwvc3ZnPg==">
 
@@ -28,16 +28,16 @@
 </head>
 <body class="text-white flex flex-col items-center p-4 min-h-screen">
 
-    <!-- Installations-Banner (WICHTIG FÜR DOWNLOAD) -->
+    <!-- Installations-Banner -->
     <div id="install-banner" class="hidden w-full max-w-md bg-orange-600 p-4 rounded-2xl mb-6 flex justify-between items-center shadow-2xl border border-orange-400">
         <div class="flex items-center gap-3">
             <span class="text-2xl">🛡️</span>
             <div class="flex flex-col">
                 <span class="text-xs font-black uppercase">Chuck Guard installieren</span>
-                <span class="text-[10px] opacity-80 uppercase">Für Offline-Nutzung & Logo</span>
+                <span class="text-[10px] opacity-80 uppercase">Homescreen-Icon mit Logo erhalten</span>
             </div>
         </div>
-        <button id="install-btn" class="bg-black text-white px-4 py-2 rounded-xl font-black text-xs uppercase">Laden</button>
+        <button id="install-btn" class="bg-black text-white px-4 py-2 rounded-xl font-black text-xs uppercase">Installieren</button>
     </div>
 
     <header class="w-full max-w-md py-8 flex justify-between items-start">
@@ -67,18 +67,18 @@
         </div>
 
         <button id="start-btn" class="w-full bg-gradient-to-b from-orange-500 to-orange-700 text-white font-black py-6 rounded-2xl shadow-xl active:scale-95 transition-all uppercase italic text-xl border-b-4 border-orange-900">
-            Abfangen
+            Abfangen starten
         </button>
 
         <div id="result-area" class="hidden flex flex-col gap-4">
             <div class="bg-black/60 rounded-2xl p-4 border border-white/5">
-                <p id="transcript-text" class="text-xs text-slate-400 italic">Höre zu...</p>
+                <p id="transcript-text" class="text-xs text-slate-400 italic font-mono uppercase tracking-tighter">Initialisiere...</p>
             </div>
-            <div id="verdict-box" class="bg-slate-800/40 rounded-2xl p-5 border border-white/10 flex items-center gap-4">
+            <div id="verdict-box" class="bg-slate-800/40 rounded-2xl p-5 border border-white/10 flex items-center gap-4 transition-all duration-500">
                 <div id="verdict-icon" class="text-3xl">🛡️</div>
                 <div class="flex-1">
-                    <h3 id="verdict-title" class="font-black italic text-xs uppercase text-orange-500">Scan aktiv</h3>
-                    <p id="verdict-desc" class="text-[10px] text-slate-400 uppercase leading-snug">Warte auf Sprache...</p>
+                    <h3 id="verdict-title" class="font-black italic text-xs uppercase text-orange-500 tracking-widest">Warte auf Scan</h3>
+                    <p id="verdict-desc" class="text-[10px] text-slate-400 uppercase leading-tight mt-1">Höre Umgebung ab...</p>
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
         let isScreening = false;
         let deferredPrompt;
 
-        // PWA Download-Logic
+        // PWA Installation
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -119,31 +119,37 @@
             }
         });
 
-        // Offline Stimme
+        // Lokale Stimme (Chuck Norris Style)
         function speak(text) {
             return new Promise(resolve => {
                 window.speechSynthesis.cancel();
                 const m = new SpeechSynthesisUtterance(text);
                 const voices = window.speechSynthesis.getVoices();
+                // Versuche eine deutsche männliche Stimme zu finden
                 const male = voices.find(v => v.lang.startsWith('de') && /male|männlich|man/i.test(v.name)) || voices.find(v => v.lang.startsWith('de'));
                 if (male) m.voice = male;
                 m.lang = 'de-DE';
-                m.pitch = 0.3; // Tief
-                m.rate = 0.85; // Langsam
+                m.pitch = 0.4; // Tief
+                m.rate = 0.8; // Langsam
                 m.onend = resolve;
                 window.speechSynthesis.speak(m);
             });
         }
 
+        // Keywords für Offline-Analyse
         function analyze(text) {
             const t = text.toLowerCase();
-            if (["gewinn", "abo", "polizei", "geld", "vertrag", "enkel"].some(w => t.includes(w))) 
-                return { v: 'SCAM', t: 'BEDROHUNG', i: '💀', c: 'Scammer erkannt. Chuck Norris legt jetzt auf.', cls: 'bg-red-900/40 border-red-500' };
-            if (["paket", "dhl", "bote", "lieferung", "amazon"].some(w => t.includes(w))) 
-                return { v: 'BOTE', t: 'PAKETBOTE', i: '📦', c: 'Paketbote erkannt. Du darfst passieren.', cls: 'bg-blue-900/40 border-blue-500' };
+            const scams = ["gewinn", "abo", "polizei", "geld", "vertrag", "enkel", "kredit", "werbung"];
+            const bots = ["paket", "dhl", "bote", "lieferung", "amazon", "tür", "post", "hermes"];
+
+            if (scams.some(w => t.includes(w))) 
+                return { v: 'SCAM', t: 'BEDROHUNG', i: '💀', c: 'Scam erkannt. Chuck Norris legt jetzt für dich auf.', cls: 'bg-red-900/40 border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.3)]' };
+            if (bots.some(w => t.includes(w))) 
+                return { v: 'BOTE', t: 'PAKETBOTE', i: '📦', c: 'Paketbote identifiziert. Du kannst das Gespräch annehmen.', cls: 'bg-blue-900/40 border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.3)]' };
             return null;
         }
 
+        // Spracherkennung initialisieren
         if ('webkitSpeechRecognition' in window) {
             recognition = new webkitSpeechRecognition();
             recognition.continuous = true;
@@ -152,24 +158,31 @@
             
             recognition.onresult = (e) => {
                 let trans = '';
-                for (let i = e.resultIndex; i < e.results.length; ++i) if (e.results[i].isFinal) trans += e.results[i][0].transcript;
+                for (let i = e.resultIndex; i < e.results.length; ++i) {
+                    if (e.results[i].isFinal) trans += e.results[i][0].transcript;
+                }
                 if (trans.trim() && isScreening) {
-                    transcriptText.innerText = `"${trans.trim()}"`;
+                    transcriptText.innerText = `RECOGNIZED: "${trans.trim()}"`;
                     const res = analyze(trans);
                     if (res) processVerdict(res);
                 }
             };
+
+            recognition.onerror = () => resetUI();
         }
 
         async function processVerdict(res) {
             isScreening = false;
             recognition.stop();
+            
             verdictTitle.innerText = res.t;
             verdictIcon.innerText = res.i;
             verdictDesc.innerText = res.c;
-            verdictBox.className = `rounded-2xl p-5 border flex items-center gap-4 transition-all ${res.cls}`;
+            verdictBox.className = `rounded-2xl p-5 border flex items-center gap-4 transition-all duration-500 ${res.cls}`;
+            
             statusDot.className = "w-2 h-2 rounded-full bg-blue-500 animate-pulse";
-            statusText.innerText = "Chuck spricht";
+            statusText.innerText = "CHUCK SPRICHT";
+            
             await speak(res.c);
             resetUI();
         }
@@ -177,7 +190,7 @@
         function resetUI() {
             isScreening = false;
             startBtn.disabled = false;
-            startBtn.innerText = "Abfangen";
+            startBtn.innerText = "Anruf Abfangen";
             idleIcon.classList.remove('hidden');
             recordingUI.classList.add('hidden');
             statusDot.className = "w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e]";
@@ -187,17 +200,27 @@
         startBtn.addEventListener('click', async () => {
             if (isScreening) return;
             isScreening = true;
+            
             resultArea.classList.remove('hidden');
             startBtn.disabled = true;
-            startBtn.innerText = "AKTIV";
+            startBtn.innerText = "SCAN LÄUFT";
             idleIcon.classList.add('hidden');
             recordingUI.classList.remove('hidden');
-            statusText.innerText = "Chuck spricht";
-            await speak("Hier spricht Chuck Norris. Sag sofort was du willst.");
-            statusText.innerText = "Zuhören...";
-            if (recognition) recognition.start();
-            setTimeout(() => { if(isScreening) { speak("Zeit um."); resetUI(); } }, 25000);
+            
+            statusText.innerText = "CHUCK SPRICHT";
+            await speak("Hier ist Chuck Norris. Erkläre dein Anliegen sofort, oder ich beende diese Verbindung.");
+            
+            statusText.innerText = "ZUHÖREN...";
+            if (recognition) {
+                try { recognition.start(); } catch(e) {}
+            }
+            
+            // Auto-Stop nach 25 Sek
+            setTimeout(() => { if(isScreening) resetUI(); }, 25000);
         });
+
+        // Stimmen laden für Android/Chrome
+        window.speechSynthesis.getVoices();
     </script>
 </body>
 </html>
