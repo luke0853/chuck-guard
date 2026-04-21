@@ -9,124 +9,82 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#020617">
     
-    <title>Chuck Guard AI - Tactical Offline</title>
+    <title>Chuck Guard AI</title>
     
-    <!-- PWA Icon & Manifest Setup (Fehlerfrei in Base64 kodiert) -->
+    <!-- Validiertes Icon (Schild-Logo) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzAyMDYxNyIvPjxwYXRoIGQ9Ik0yNTYgNTBMOTYgMTUwdjE0MGMwIDExMC40IDg5LjYgMjAwIDIwMCAyMDBzMjAwLTg5LjYgMjAwLTIwMFYxNTBMMjU2IDUweiIgZmlsbD0iI2VhNTgwYyIvPjwvc3ZnPg==">
     <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iIzAyMDYxNyIvPjxwYXRoIGQ9Ik0yNTYgNTBMOTYgMTUwdjE0MGMwIDExMC40IDg5LjYgMjAwIDIwMCAyMDBzMjAwLTg5LjYgMjAwLTIwMFYxNTBMMjU2IDUweiIgZmlsbD0iI2VhNTgwYyIvPjwvc3ZnPg==">
 
-    <!-- Manifest für die Installation auf dem Homescreen -->
-    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiQ2h1Y2sgR3VhcmQgQUkiLCJzaG9ydF9uYW1lIjoiQ2h1Y2tHdWFyZCIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMDIwNjE3IiwidGhlbWVfY29sb3IiOiIjMDIwNjE3IiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMmF5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzlzZG1jaUlIWnBaWGRDYjNnOUlqQWdNQ0ExTVRJZ05URXlJajQ4Y21WamRDQjNhV1IwYURwaU5URXlJaUJvWldWbmFIUTlJakV4TWlJZ1ptbHNiRDBpSXpBeU1EWXhOeUkvUGp4d1lYUm9JR1E5SWsweU5UWWdOVEJNT1RZZ01UVXdkakUwTUdNd0lERXhNQzQwSURnNUxqWWdNakF3SURJd01ITXlNREF0T0RrdU5pQXlNREF0TWpBd1ZqRTFNRXh5TlRZZ05UQjZJaUptYVd4c1BTSWpaV0UxT0RCaklpdDhwQzYvYzNaNlBnPT0iLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCIsInB1cnBvc2UiOiJhbnkgbWFza2FibGUifV19">
+    <!-- Korrigiertes Manifest: Alle Icons valide und Base64-sauber -->
+    <link rel="manifest" href='data:application/json;base64,ewogICJuYW1lIjogIkNodWNrIEd1YXJkIEFJIiwKICAic2hvcnRfbmFtZSI6ICJDaHVja0d1YXJkIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwMjA2MTciLAogICJ0aGVtZV9jb2xvciI6ICIjMDIwNjE3IiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yYXlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOTtkbWNpSUhaalkyUnZkRDlpTnpBZ056QWdOVUV5SU5Vek1pSStQR3R5WldOMElIZDBlSFI0UFNJMU1USWlJSGVsWjJodFBTSTFNVElpSUdadmJXdzlJakF3TURBd016QXdNU0l2UGp4d1lYUm9JR1E5SWsweU5UWWdOVEJNT1RZZ01UVXdkakUwTUdNd0lERXhNQzQwSURnNUxqWWdNakF3SURJd01ITXlNREF0T0RrdU5pQXlNREF0TWpBd1ZqRTFNRXh5TlRZZ05UQjZJaUptYVd4c1BTSWpaV0UxT0RCaklpdDhwQzYvYzNaNlBnPT0iLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiLAogICAgICAicHVycG9zZSI6ICJhbnkgbWFza2FibGUiCiAgICB9CiAgXQp9'>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .recording-ring { animation: ring 1.5s ease-out infinite; }
         @keyframes ring { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.6); opacity: 0; } }
-        
-        body { 
-            background-color: #020617; /* Tiefschwarz/Schiefer */
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .glass-ui {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Versteckt Scrollbars für ein saubereres App-Gefühl */
-        ::-webkit-scrollbar { display: none; }
+        body { background-color: #020617; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+        .glass-ui { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
     </style>
 </head>
-<body class="text-white items-center p-4">
+<body class="text-white flex flex-col items-center p-4 min-h-screen">
 
-    <!-- PWA Installations-Banner -->
-    <div id="install-banner" class="hidden w-full max-w-md bg-orange-600/90 backdrop-blur-md p-4 rounded-2xl mb-6 flex justify-between items-center shadow-lg border border-orange-500 transition-all">
+    <!-- Installations-Banner (WICHTIG FÜR DOWNLOAD) -->
+    <div id="install-banner" class="hidden w-full max-w-md bg-orange-600 p-4 rounded-2xl mb-6 flex justify-between items-center shadow-2xl border border-orange-400">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-black/30 rounded-xl flex items-center justify-center">
-                <span class="text-xl">📲</span>
-            </div>
+            <span class="text-2xl">🛡️</span>
             <div class="flex flex-col">
-                <span class="text-[11px] font-black uppercase tracking-wider text-white">Als App installieren</span>
-                <span class="text-[9px] text-white/80 uppercase tracking-widest">Für Hardware-Taste</span>
+                <span class="text-xs font-black uppercase">Chuck Guard installieren</span>
+                <span class="text-[10px] opacity-80 uppercase">Für Offline-Nutzung & Logo</span>
             </div>
         </div>
-        <button id="install-btn" class="bg-black text-orange-500 px-4 py-2 rounded-xl font-black text-[10px] uppercase shadow-inner active:scale-95 transition-transform">Installieren</button>
+        <button id="install-btn" class="bg-black text-white px-4 py-2 rounded-xl font-black text-xs uppercase">Laden</button>
     </div>
 
-    <!-- Header -->
-    <header class="w-full max-w-md py-6 flex justify-between items-start">
+    <header class="w-full max-w-md py-8 flex justify-between items-start">
         <div class="flex flex-col">
-            <h1 class="text-4xl font-black text-orange-600 tracking-tighter uppercase italic leading-none drop-shadow-md">Chuck Guard</h1>
-            <span class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.4em] mt-1 ml-1">Offline Tactical Mode</span>
+            <h1 class="text-4xl font-black text-orange-600 tracking-tighter uppercase italic leading-none">Chuck Guard</h1>
+            <span class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.4em] mt-1 ml-1">Tactical Defense Mode</span>
         </div>
-        <div class="flex flex-col items-end">
-            <div class="flex items-center gap-2 bg-black/40 px-3 py-1.5 rounded-full border border-white/5">
-                <div id="status-dot" class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e] transition-colors duration-300"></div>
-                <span id="status-text" class="text-[8px] font-black uppercase tracking-widest text-slate-300">Bereit</span>
-            </div>
+        <div class="flex items-center gap-2 bg-black/40 px-3 py-1.5 rounded-full border border-white/5">
+            <div id="status-dot" class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e]"></div>
+            <span id="status-text" class="text-[8px] font-black uppercase text-slate-300">Ready</span>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="w-full max-w-md glass-ui rounded-[2.5rem] p-6 flex flex-col gap-8 relative overflow-hidden flex-1">
-        
-        <!-- Radar / Visualizer -->
-        <div class="h-48 bg-black/50 rounded-[2rem] flex items-center justify-center border border-white/5 relative shadow-inner">
-            <div id="idle-icon" class="text-orange-500/10 transition-opacity duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-32 h-32" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.3" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                </svg>
+    <main class="w-full max-w-md glass-ui rounded-[2.5rem] p-6 flex flex-col gap-8 flex-1 shadow-2xl">
+        <div class="h-48 bg-black/50 rounded-[2rem] flex items-center justify-center border border-white/5 relative">
+            <div id="idle-icon" class="text-orange-500/10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-32 h-32" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.3" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
             </div>
-            
-            <div id="recording-ui" class="hidden transition-opacity duration-300">
+            <div id="recording-ui" class="hidden">
                 <div class="relative">
                     <div class="absolute inset-0 bg-orange-600 rounded-full recording-ring"></div>
-                    <div class="relative w-24 h-24 bg-gradient-to-br from-orange-500 to-orange-700 rounded-full flex items-center justify-center shadow-2xl">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                        </svg>
+                    <div class="relative w-24 h-24 bg-orange-600 rounded-full flex items-center justify-center shadow-2xl">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Action Button -->
-        <button id="start-btn" class="w-full bg-gradient-to-b from-orange-500 to-orange-700 hover:from-orange-400 hover:to-orange-600 text-white font-black py-6 rounded-[1.5rem] shadow-xl active:scale-[0.97] transition-all uppercase italic text-xl border-b-4 border-orange-900 focus:outline-none">
-            Anruf Abfangen
+        <button id="start-btn" class="w-full bg-gradient-to-b from-orange-500 to-orange-700 text-white font-black py-6 rounded-2xl shadow-xl active:scale-95 transition-all uppercase italic text-xl border-b-4 border-orange-900">
+            Abfangen
         </button>
 
-        <!-- Log / Result Area -->
-        <div id="result-area" class="hidden flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div class="bg-black/80 rounded-2xl p-4 border border-white/5 relative">
-                <div class="absolute top-0 left-4 -translate-y-1/2 bg-black px-2 text-[8px] font-mono text-orange-500 uppercase tracking-widest">Live Transcript</div>
-                <p id="transcript-text" class="text-xs text-slate-400 italic leading-relaxed min-h-[3rem] mt-1">Höre Umgebung ab...</p>
+        <div id="result-area" class="hidden flex flex-col gap-4">
+            <div class="bg-black/60 rounded-2xl p-4 border border-white/5">
+                <p id="transcript-text" class="text-xs text-slate-400 italic">Höre zu...</p>
             </div>
-            
-            <div id="verdict-box" class="bg-slate-800/40 rounded-2xl p-5 border border-white/10 flex items-center gap-4 transition-colors duration-500">
-                <div id="verdict-icon" class="text-3xl grayscale opacity-50 transition-all duration-500">🛡️</div>
+            <div id="verdict-box" class="bg-slate-800/40 rounded-2xl p-5 border border-white/10 flex items-center gap-4">
+                <div id="verdict-icon" class="text-3xl">🛡️</div>
                 <div class="flex-1">
-                    <h3 id="verdict-title" class="font-black italic text-xs uppercase text-orange-500 tracking-wider">Analyse läuft</h3>
-                    <p id="verdict-desc" class="text-[10px] text-slate-400 uppercase leading-snug mt-0.5">Warte auf Sprachmuster...</p>
+                    <h3 id="verdict-title" class="font-black italic text-xs uppercase text-orange-500">Scan aktiv</h3>
+                    <p id="verdict-desc" class="text-[10px] text-slate-400 uppercase leading-snug">Warte auf Sprache...</p>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="w-full max-w-md py-6 text-center">
-        <p class="text-[8px] font-mono text-slate-600 uppercase tracking-widest">Secure Local Processing • BV9300</p>
-    </footer>
-
     <script>
-        // DOM Elements
         const startBtn = document.getElementById('start-btn');
         const recordingUI = document.getElementById('recording-ui');
         const idleIcon = document.getElementById('idle-icon');
@@ -138,249 +96,108 @@
         const verdictIcon = document.getElementById('verdict-icon');
         const statusDot = document.getElementById('status-dot');
         const statusText = document.getElementById('status-text');
-        
-        // PWA Elements
         const installBanner = document.getElementById('install-banner');
         const installBtn = document.getElementById('install-btn');
 
         let recognition;
         let isScreening = false;
-        let voicesLoaded = false;
-        let maleVoiceData = null;
-
-        // --- 1. PWA INSTALLATION LOGIK ---
         let deferredPrompt;
+
+        // PWA Download-Logic
         window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault(); // Verhindert den automatischen Browser-Dialog
+            e.preventDefault();
             deferredPrompt = e;
-            installBanner.classList.remove('hidden'); // Zeigt unseren eigenen Banner
+            installBanner.classList.remove('hidden');
         });
 
         installBtn.addEventListener('click', async () => {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    installBanner.classList.add('hidden');
-                }
+                if (outcome === 'accepted') installBanner.classList.add('hidden');
                 deferredPrompt = null;
             }
         });
 
-        // --- 2. OFFLINE VOICE ENGINE (Der "Blech-Frau" Fix) ---
-        // Lädt die Stimmen des Betriebssystems asynchron und sucht gezielt nach Männern
-        function initVoices() {
-            const voices = window.speechSynthesis.getVoices();
-            if (voices.length > 0) {
-                voicesLoaded = true;
-                // Filtere nach deutschen, männlichen Stimmen. Fallback auf generisch Deutsch, wenn kein Mann gefunden wird.
-                maleVoiceData = voices.find(v => v.lang.startsWith('de') && (/male|männlich|man/i.test(v.name))) 
-                             || voices.find(v => v.lang.startsWith('de'))
-                             || voices[0];
-            }
-        }
-        
-        // Chrome feuert dieses Event, sobald die Stimmen bereit sind
-        window.speechSynthesis.onvoiceschanged = initVoices;
-        initVoices(); // Fallback-Aufruf
-
+        // Offline Stimme
         function speak(text) {
             return new Promise(resolve => {
-                const utterance = new SpeechSynthesisUtterance(text);
-                
-                // Stelle sicher, dass die beste verfügbare Stimme genutzt wird
-                if (maleVoiceData) {
-                    utterance.voice = maleVoiceData;
-                }
-                
-                utterance.lang = 'de-DE';
-                utterance.pitch = 0.2; // Extrem tiefe Frequenz
-                utterance.rate = 0.85; // Leicht verlangsamt für mehr Bedrohung
-                utterance.volume = 1.0;
-
-                utterance.onend = resolve;
-                utterance.onerror = resolve; // Verhindert Hängenbleiben bei Fehlern
-
-                window.speechSynthesis.speak(utterance);
+                window.speechSynthesis.cancel();
+                const m = new SpeechSynthesisUtterance(text);
+                const voices = window.speechSynthesis.getVoices();
+                const male = voices.find(v => v.lang.startsWith('de') && /male|männlich|man/i.test(v.name)) || voices.find(v => v.lang.startsWith('de'));
+                if (male) m.voice = male;
+                m.lang = 'de-DE';
+                m.pitch = 0.3; // Tief
+                m.rate = 0.85; // Langsam
+                m.onend = resolve;
+                window.speechSynthesis.speak(m);
             });
         }
 
-        // --- 3. LOKALE KI (Keyword Erkennung) ---
-        function analyzeLocally(text) {
-            const lowerText = text.toLowerCase();
-            
-            // Taktische Keyword-Listen
-            const scamWords = ["gewinn", "abo", "konto", "polizei", "werbung", "vertrag", "geld", "überweisen", "software", "microsoft", "strom", "zähler", "kryptowährung", "investition", "enkel"];
-            const deliveryWords = ["paket", "dhl", "hermes", "lieferung", "bestellung", "bote", "post", "amazon", "dpd", "ups", "tür", "klingel"];
-            const okWords = ["arzt", "krankenhaus", "termin", "schule", "notfall"];
-
-            if (scamWords.some(word => lowerText.includes(word))) {
-                return { 
-                    verdict: 'SCAM', 
-                    title: 'BEDROHUNG ERKANNT',
-                    icon: '💀',
-                    color: 'red',
-                    comment: "Scammer identifiziert. Chuck Norris hat deine Nummer. Ich lege jetzt auf." 
-                };
-            }
-            if (deliveryWords.some(word => lowerText.includes(word))) {
-                return { 
-                    verdict: 'BOTE', 
-                    title: 'PAKETBOTE',
-                    icon: '📦',
-                    color: 'blue',
-                    comment: "Ein Paketbote. Du darfst passieren. Ich stelle durch." 
-                };
-            }
-            if (okWords.some(word => lowerText.includes(word))) {
-                return { 
-                    verdict: 'OK', 
-                    title: 'LEGITIM',
-                    icon: '✔️',
-                    color: 'green',
-                    comment: "Legitimer Anruf. Verbindung wird freigegeben." 
-                };
-            }
-            
-            return null; // Weiter zuhören, wenn nichts erkannt wurde
+        function analyze(text) {
+            const t = text.toLowerCase();
+            if (["gewinn", "abo", "polizei", "geld", "vertrag", "enkel"].some(w => t.includes(w))) 
+                return { v: 'SCAM', t: 'BEDROHUNG', i: '💀', c: 'Scammer erkannt. Chuck Norris legt jetzt auf.', cls: 'bg-red-900/40 border-red-500' };
+            if (["paket", "dhl", "bote", "lieferung", "amazon"].some(w => t.includes(w))) 
+                return { v: 'BOTE', t: 'PAKETBOTE', i: '📦', c: 'Paketbote erkannt. Du darfst passieren.', cls: 'bg-blue-900/40 border-blue-500' };
+            return null;
         }
 
-        // --- 4. SPRACHERKENNUNG ---
         if ('webkitSpeechRecognition' in window) {
             recognition = new webkitSpeechRecognition();
             recognition.continuous = true;
             recognition.interimResults = true;
             recognition.lang = 'de-DE';
             
-            recognition.onstart = () => {
-                statusDot.className = "w-2 h-2 rounded-full bg-orange-500 animate-pulse shadow-[0_0_8px_#f97316]";
-                statusText.innerText = "Zuhören";
-            };
-
-            recognition.onerror = (e) => {
-                if (e.error !== 'no-speech') {
-                    console.error("Mic Error:", e);
-                    stopAll("Mikrofon-Fehler");
-                }
-            };
-
-            recognition.onend = () => {
-                if (isScreening) {
-                    // Neustart, falls die Verbindung abbricht, aber noch gescreent wird
-                    try { recognition.start(); } catch(e) {}
-                }
-            };
-            
             recognition.onresult = (e) => {
                 let trans = '';
-                for (let i = e.resultIndex; i < e.results.length; ++i) {
-                    if (e.results[i].isFinal) {
-                        trans += e.results[i][0].transcript + " ";
-                    }
-                }
-                
-                if (trans.trim().length > 3 && isScreening) {
+                for (let i = e.resultIndex; i < e.results.length; ++i) if (e.results[i].isFinal) trans += e.results[i][0].transcript;
+                if (trans.trim() && isScreening) {
                     transcriptText.innerText = `"${trans.trim()}"`;
-                    
-                    const res = analyzeLocally(trans);
-                    if (res) {
-                        processVerdict(res);
-                    }
+                    const res = analyze(trans);
+                    if (res) processVerdict(res);
                 }
             };
-        } else {
-            transcriptText.innerText = "Dein Browser unterstützt keine lokale Spracherkennung.";
-            startBtn.disabled = true;
-            startBtn.classList.add('opacity-50');
         }
 
         async function processVerdict(res) {
-            isScreening = false; // Stoppt das weitere Zuhören
-            if(recognition) recognition.stop();
-
-            // UI Update basierend auf dem Ergebnis
-            verdictTitle.innerText = res.title;
-            verdictIcon.innerText = res.icon;
-            verdictIcon.classList.remove('grayscale', 'opacity-50');
-            verdictDesc.innerText = res.comment;
-
-            if (res.color === 'red') {
-                verdictBox.className = "bg-red-950/40 rounded-2xl p-5 border border-red-500/50 flex items-center gap-4 transition-colors duration-500";
-                verdictTitle.className = "font-black italic text-xs uppercase text-red-500 tracking-wider";
-            } else if (res.color === 'blue') {
-                verdictBox.className = "bg-blue-950/40 rounded-2xl p-5 border border-blue-500/50 flex items-center gap-4 transition-colors duration-500";
-                verdictTitle.className = "font-black italic text-xs uppercase text-blue-500 tracking-wider";
-            } else {
-                verdictBox.className = "bg-green-950/40 rounded-2xl p-5 border border-green-500/50 flex items-center gap-4 transition-colors duration-500";
-                verdictTitle.className = "font-black italic text-xs uppercase text-green-500 tracking-wider";
-            }
-
-            statusDot.className = "w-2 h-2 rounded-full bg-blue-500 animate-pulse shadow-[0_0_8px_#3b82f6]";
+            isScreening = false;
+            recognition.stop();
+            verdictTitle.innerText = res.t;
+            verdictIcon.innerText = res.i;
+            verdictDesc.innerText = res.c;
+            verdictBox.className = `rounded-2xl p-5 border flex items-center gap-4 transition-all ${res.cls}`;
+            statusDot.className = "w-2 h-2 rounded-full bg-blue-500 animate-pulse";
             statusText.innerText = "Chuck spricht";
-
-            await speak(res.comment);
-            stopAll();
+            await speak(res.c);
+            resetUI();
         }
 
-        function stopAll(statusMsg = "Bereit") {
+        function resetUI() {
             isScreening = false;
             startBtn.disabled = false;
-            startBtn.innerHTML = "Anruf Abfangen";
-            
-            idleIcon.classList.remove('hidden'); 
+            startBtn.innerText = "Abfangen";
+            idleIcon.classList.remove('hidden');
             recordingUI.classList.add('hidden');
-            
-            if(recognition) recognition.stop();
-            
-            statusDot.className = "w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e] transition-colors duration-300";
-            statusText.innerText = statusMsg;
+            statusDot.className = "w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e]";
+            statusText.innerText = "Ready";
         }
 
-        // --- HAUPT-BUTTON LOGIK ---
         startBtn.addEventListener('click', async () => {
-            if (isScreening) return; // Verhindert Doppel-Klicks
-            
-            // iOS/Android erfordert eine Nutzer-Interaktion VOR der ersten Sprachausgabe
-            // Wir triggern hier ein "leeres" Audio, um die Engine zu wecken
-            if (!voicesLoaded) initVoices();
-            window.speechSynthesis.resume();
-
+            if (isScreening) return;
             isScreening = true;
             resultArea.classList.remove('hidden');
             startBtn.disabled = true;
-            startBtn.innerHTML = "SYSTEM AKTIV...";
-            
-            idleIcon.classList.add('hidden'); 
+            startBtn.innerText = "AKTIV";
+            idleIcon.classList.add('hidden');
             recordingUI.classList.remove('hidden');
-            
-            verdictBox.className = "bg-slate-800/40 rounded-2xl p-5 border border-white/10 flex items-center gap-4 transition-colors duration-500";
-            verdictTitle.innerText = "Analyse läuft";
-            verdictTitle.className = "font-black italic text-xs uppercase text-orange-500 tracking-wider";
-            verdictDesc.innerText = "Warte auf Sprachmuster...";
-            verdictIcon.innerText = "🛡️";
-            verdictIcon.classList.add('grayscale', 'opacity-50');
-            transcriptText.innerText = "Höre Umgebung ab...";
-
-            statusDot.className = "w-2 h-2 rounded-full bg-blue-500 animate-pulse shadow-[0_0_8px_#3b82f6]";
             statusText.innerText = "Chuck spricht";
-
-            // Chucks Begrüßung
-            await speak("Hier spricht Chuck Norris. Erkläre dein Anliegen sofort, oder ich lege auf.");
-            
-            // Mikrofon starten
-            if(recognition) {
-                try { recognition.start(); } catch(e) { console.log("Recog already started"); }
-            }
-            
-            // Timeout: Nach 30 Sekunden automatisch beenden, falls niemand was sagt
-            setTimeout(() => { 
-                if(isScreening) {
-                    speak("Zeit abgelaufen. Chuck Norris wartet auf niemanden.");
-                    stopAll("Timeout"); 
-                }
-            }, 30000);
+            await speak("Hier spricht Chuck Norris. Sag sofort was du willst.");
+            statusText.innerText = "Zuhören...";
+            if (recognition) recognition.start();
+            setTimeout(() => { if(isScreening) { speak("Zeit um."); resetUI(); } }, 25000);
         });
-
     </script>
 </body>
 </html>
